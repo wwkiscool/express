@@ -1,9 +1,8 @@
-// var express = require('express');
-// // var app = express();
 var mysql = require('mysql');
 
 let config = {
 	host: '192.168.8.100',
+	port: 3306,
 	user: 'mspdev',
 	password: 'mspdev',
 	database: 'mspdev'
@@ -11,18 +10,57 @@ let config = {
 
 let pool = mysql.createPool(config);
 
-function query(sql, values, callback) {
+function responseDoReturn(res, ret) {
+	if (typeof ret === 'undefined') {
+		res.json({
+			code: '-1',
+			msg: '操作失败'
+		})
+	} else {
+		res.json(ret);
+	}
+}
+
+/**
+ *封装query sql 不带占位符
+ *
+ * @param {*} sql
+ * @param {*} callback
+ */
+function query(sql, callback) {
 	pool.getConnection((err, res) => {
 		if (err) {
-			console.log('数据库连接失败')
 			callback(err)
 		}
-		console.log('数据库连接成功')
-		res.query(sql, values, (err, rows) => {
+
+		res.query(sql, (err, rows) => {
 			callback(err, rows)
 			// console.log(rows)
 			res.release()
-		})
+		});
+
 	})
 }
-exports.query = query
+
+/**
+ * 封装query sql带占位符
+ */
+function queryArgs(sql,args,callback) {
+	pool.getConnection((err,connection) => {
+		if (err) {
+			callback(err)
+		} else {
+			connection.query(sql,args,(err,rows) => {
+				connection.release;
+				callback(err,rows);
+				// 释放链接
+			})
+		}
+	})
+}
+
+module.exports = {
+	query,
+	queryArgs,
+	responseDoReturn
+}
