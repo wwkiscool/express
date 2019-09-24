@@ -83,7 +83,14 @@ function selectOne( req, res, callback) {
 // 更新
 function updateAction (req,res,callabck) {
 	var param = req.query || req.params;
-	db.queryArgs(sql.updateOne, [param.address,param.makeDate,param.attendanceNo], (err, result) => {
+	if (param.address) {
+		var temp = [param.address,param.makeDate,param.attendanceNo];
+		var _sql = sql.updateOne
+	} else {
+		var temp =[param.makeDate,param.attendanceNo];
+		var _sql = sql.updateOnlyOne
+	}
+	db.queryArgs(_sql,temp , (err, result) => {
 		if (!err) {
 			result={
 				code: 200,
