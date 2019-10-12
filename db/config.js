@@ -2,12 +2,21 @@
 // // var app = express();
 var mysql = require('mysql');
 
+// let config = {
+// 	host: '192.168.8.100',
+// 	user: 'mspdev',
+// 	password: 'mspdev',
+// 	database: 'mspdev'
+// }
+
 let config = {
-	host: '192.168.8.100',
-	user: 'mspdev',
-	password: 'mspdev',
-	database: 'mspdev'
+    host: 'localhost',
+	user: 'root',
+	port: 3306,
+	password: '326459',
+	database: 'world'
 }
+
 
 let pool = mysql.createPool(config);
 
@@ -17,8 +26,9 @@ function query(sql, values, callback) {
 			console.log('数据库连接失败')
 			callback(err)
 		}
-		console.log('数据库连接成功')
-		res.query(sql, values, (err, rows) => {
+		
+		res.query(sql, values,(err, rows) => {
+			console.log('数据库连接成功')
 			callback(err, rows)
 			// console.log(rows)
 			res.release()
