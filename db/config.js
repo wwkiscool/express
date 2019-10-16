@@ -11,8 +11,8 @@ let config = {
     host: 'localhost',
 	user: 'root',
 	port: 3306,
-	password: '326459',
-	database: 'world'
+	password: 'root',
+	database: 'test1'
 }
 
 
@@ -60,7 +60,8 @@ function queryArgs(sql,args,callback) {
 		} else {
 			connection.query(sql,args,(err,rows) => {
 				connection.release;
-				callback(err,rows);
+        callback(err,rows);
+        console.log('2',arguments)
 				// 释放链接
 			})
 		}
