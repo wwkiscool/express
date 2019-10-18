@@ -55,13 +55,15 @@ function query(sql, callback) {
  */
 function queryArgs(sql,args,callback) {
 	pool.getConnection((err,connection) => {
+
+    console.log('2',arguments)
 		if (err) {
 			callback(err)
 		} else {
+      
 			connection.query(sql,args,(err,rows) => {
 				connection.release;
         callback(err,rows);
-        console.log('2',arguments)
 				// 释放链接
 			})
 		}

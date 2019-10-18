@@ -29,9 +29,7 @@ router.post('/selectOne',(req,res,next) => {
 })
 // 注册
 router.post('/register',(req,res,next) =>{
-  sqlDo.register(req,res,(result) => {
-    res.send({result})
-  })
+  sqlDo.register(req,res,next)
 })
 // // 更新
 // router.post('/update' ,(req,res,next) => {

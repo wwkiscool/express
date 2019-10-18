@@ -60,22 +60,20 @@ var moment = require('moment')
 
 // 查询某一个  登录
 function selectOne( req, res, callback) {
-	let result = {};
   let param = req.query || req.params || req.body
-  let userCode = req.body.userCode;
-  let password = req.body.password ;
-  console.log('1', userCode,'2',password);
+  let userCode = req.body.userCode || req.params.userCode || req.query.userCode;
+  let password = req.body.password || req.params.password || req.query.password;
+  // console.log('1', userCode,'2',password);
   
-	db.query(`select * from count where userCode = ${userCode} and password = ${password}`,(err, rows) => {
+	db.query(`select * from count where userCode = ${userCode} and password = ${password}`,(err, result) => {
 		if (!err) {
 			result = {
-				code: 200,
+				code: '200',
 				msg: 'success',
-        list: rows
 			}
 		} else {
 			result = {
-				code: 201,
+				code: '201',
         err
 			}
     }
@@ -85,21 +83,23 @@ function selectOne( req, res, callback) {
 
 // 注册
 function register(req,res,callback) {
-  let userCode = req.body.userCode; // 账号
-  let password = req.body.password; // 密码
+  // console.log('1',req)
+
+  let userCode = req.body.userCode || req.query.userCode || req.params.userCode; // 账号
+  let password = req.body.password || req.query.password || req.params.password; // 密码
   // let vertify = req.body.vertify; // 验证码
+  console.log('1',userCode,'2',password)
   let theTime = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss')
-  let registerSql = `insert into count (userCode,password,makeDate) values (${userCode},${password},${theTime})`
-  db.query(registerSql,(err,rows) => {
+  let registerSql = "insert into count value(?,?,?)"
+  db.queryArgs(registerSql,[userCode,password,theTime],(err,result) => {
     if(!err){
       result ={
-        code: 200,
-				msg: 'success',
-        list: rows
+        code: '200',
+				msg: 'success'
       }
     } else {
       result = {
-        code: 201,
+        code: '201',
         err
       }
     }
