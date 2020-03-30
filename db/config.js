@@ -8,11 +8,11 @@ var mysql = require('mysql');
 // }
 
 let config = {
-  host: 'localhost',
-  user: 'root',
-  port: 3306,
-  password: 'root',
-  database: 'test'
+  host: 'cdb-4dcpgs2q.bj.tencentcdb.com',
+  user: 'test',
+  port: 10236,
+  password: 'TT123456*',
+  database: 'wwk_db'
 }
 
 

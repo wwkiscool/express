@@ -65,7 +65,7 @@ function selectOne( req, res, callback) {
   let password = req.body.password || req.params.password || req.query.password;
   // console.log('1', userCode,'2',password);
   
-	db.query(`select * from count where userCode = ${userCode} and password = ${password}`,(err, result) => {
+	db.query(`select * from user where userCode = ${userCode} and password = ${password}`,(err, result) => {
 		if (!err) {
 			result = {
 				code: '200',
@@ -86,12 +86,15 @@ function register(req,res,callback) {
   // console.log('1',req)
 
   let userCode = req.body.userCode || req.query.userCode || req.params.userCode; // 账号
-  let password = req.body.password || req.query.password || req.params.password; // 密码
+  let passWord = req.body.passWord || req.query.passWord || req.params.passWord; // 密码
   // let vertify = req.body.vertify; // 验证码
-  console.log('1',userCode,'2',password)
+  let userLevel = "0"
+  let isAdmin = "false"
+  let isFree = "false"
+  console.log('1',userCode,'2',passWord)
   let theTime = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss')
-  let registerSql = "insert into count value(?,?,?)"
-  db.queryArgs(registerSql,[userCode,password,theTime],(err,result) => {
+  let registerSql = `insert into user (userCode,passWord,makeDate,userLevel,isAdmin,isFree) values (?,?,?,${userLevel},${isAdmin},${isFree})`
+  db.queryArgs(registerSql,[userCode,passWord,theTime],(err,result) => {
     if(!err){
       result ={
         code: '200',

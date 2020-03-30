@@ -1,5 +1,5 @@
 var sql = {
-  selectOne : 'select * from count where userCode = ? and password = ?',
-  register: 'insert into count value ?'
+  selectOne : 'select * from user where userCode = ? and passWord = ?',
+  register: 'insert into user value ?'
 }
 module.exports = sql
