@@ -62,10 +62,10 @@ var moment = require('moment')
 function selectOne( req, res, callback) {
   let param = req.query || req.params || req.body
   let userCode = req.body.userCode || req.params.userCode || req.query.userCode;
-  let password = req.body.password || req.params.password || req.query.password;
+  let passWord = req.body.passWord || req.params.passWord || req.query.passWord;
   // console.log('1', userCode,'2',password);
   
-	db.query(`select * from user where userCode = ${userCode} and password = ${password}`,(err, result) => {
+	db.query(`select * from user where userCode = ${userCode} and passWord = ${passWord}`,(err, result) => {
 		if (!err) {
 			result = {
 				code: '200',
