@@ -65,7 +65,7 @@ function selectOne( req, res, callback) {
   let passWord = req.body.passWord || req.params.passWord || req.query.passWord;
   // console.log('1', userCode,'2',password);
   
-	db.query(`select * from user where userCode = ${userCode} and passWord = ${passWord}`,(err, result) => {
+	db.query(`select * from user where userCode = "${userCode}" and passWord = "${passWord}"`,(err, result) => {
 		if (!err) {
 			result = {
 				code: '200',
